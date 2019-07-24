@@ -148,15 +148,15 @@ for i in range(60000):
 
 
         if not i % 50:
-        print (i, d_ls, g_ls, d_real_ls, d_fake_ls)
-        if not train_g:
-            print("not training generator")
-        if not train_d:
-            print("not training discriminator")
-        gen_img = sess.run(g, feed_dict = {noise: n, keep_prob: 1.0, is_training:False})
-        imgs = [img[:,:,0] for img in gen_img]
-        m = montage(imgs)
-        gen_img = m
-        plt.axis('off')
-        plt.imshow(gen_img, cmap='gray')
-        plt.show()
+            print (i, d_ls, g_ls, d_real_ls, d_fake_ls)
+            if not train_g:
+                print("not training generator")
+            if not train_d:
+                print("not training discriminator")
+            gen_img = sess.run(g, feed_dict = {noise: n, keep_prob: 1.0, is_training:False})
+            imgs = [img[:,:,0] for img in gen_img]
+            m = montage(imgs)
+            gen_img = m
+            plt.axis('off')
+            plt.imshow(gen_img, cmap='gray')
+            plt.show()
