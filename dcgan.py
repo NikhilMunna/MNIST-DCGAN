@@ -159,4 +159,5 @@ for i in range(60000):
             gen_img = m
             plt.axis('off')
             plt.imshow(gen_img, cmap='gray')
-            plt.show()
+            plt.savefig("Results/%s.png"%i)
+            # plt.show()
