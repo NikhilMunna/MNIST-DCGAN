@@ -61,3 +61,10 @@ def generator(z, keep_prob=keep_prob, is_training=is_training):
         x = tf.contrib.layers.batch_norm(x, is_training=is_training, decay=momentum)
         x = tf.layers.conv2d_transpose(x, kernel_size=5, filters=1, strides=1, padding='same', activation=tf.nn.sigmoid)
         return x
+
+g = generator(noise, keep_prob, is_training)
+d_real = discriminator(X_in)
+d_fake = discriminator(g, reuse=True)
+
+vars_g = [var for var in tf.trainable_variables() if var.name.startswith("generator")]
+vars_d = [var for var in tf.trainable_variables() if var.name.startswith("discriminator")]
