@@ -78,3 +78,11 @@ loss_d_fake = binary_cross_entropy(tf.zeros_like(d_fake), d_fake)
 loss_g = tf.reduce_mean(binary_cross_entropy(tf.ones_like(d_fake), d_fake))
 loss_d = tf.reduce_mean(0.5 * (loss_d_real + loss_d_fake))
 
+update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
+with tf.control_dependencies(update_ops):
+    optimizer_d = tf.train.RMSPropOptimizer(learning_rate=0.00015).minimize(loss_d + d_reg, var_list=vars_d)
+    optimizer_g = tf.train.RMSPropOptimizer(learning_rate=0.00015).minimize(loss_g + g_reg, var_list=vars_g)
+    
+    
+sess = tf.Session()
+sess.run(tf.global_variables_initializer())
