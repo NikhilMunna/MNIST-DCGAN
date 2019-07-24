@@ -68,3 +68,13 @@ d_fake = discriminator(g, reuse=True)
 
 vars_g = [var for var in tf.trainable_variables() if var.name.startswith("generator")]
 vars_d = [var for var in tf.trainable_variables() if var.name.startswith("discriminator")]
+
+
+d_reg = tf.contrib.layers.apply_regularization(tf.contrib.layers.l2_regularizer(1e-6), vars_d)
+g_reg = tf.contrib.layers.apply_regularization(tf.contrib.layers.l2_regularizer(1e-6), vars_g)
+
+loss_d_real = binary_cross_entropy(tf.ones_like(d_real), d_real)
+loss_d_fake = binary_cross_entropy(tf.zeros_like(d_fake), d_fake)
+loss_g = tf.reduce_mean(binary_cross_entropy(tf.ones_like(d_fake), d_fake))
+loss_d = tf.reduce_mean(0.5 * (loss_d_real + loss_d_fake))
+
